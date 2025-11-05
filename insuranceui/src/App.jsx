@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
+import { Home } from "./pages/Home";
 import Claim from "./pages/Claim";
 import AdminAddPolicy from "./pages/AdminAddPolicy";
 import Login from "./pages/Login";
