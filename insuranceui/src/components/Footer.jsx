@@ -1,12 +1,10 @@
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300 py-6 mt-12">
+    <footer className="bg-gray-900 text-gray-300 py-6 ">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
         {/* Left Section */}
         <div className="text-center md:text-left mb-3 md:mb-0">
-          <h2 className="text-lg font-semibold text-white">
-            Online Insurance Portal
-          </h2>
+          <h2 className="text-lg font-semibold text-white">AssureX</h2>
           <p className="text-sm text-gray-400">
             Secure • Reliable • Hassle-free insurance management
           </p>

@@ -16,6 +16,7 @@ import AdminClaims from "./pages/admin/AdminClaims";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminPolicies from "./pages/admin/AdminPolicies";
 import { Toaster } from "./components/lightswind/toaster";
+import PolicyDetails from "./pages/PolicyDetails";
 
 const router = createBrowserRouter([
   {
@@ -93,20 +94,20 @@ const router = createBrowserRouter([
       </>
     ),
   },
+  {
+    path: "/policy/:id",
+    element: (
+      <>
+        <Navbar />
+        <ProtectedRoute allowedRole="user">
+          <PolicyDetails />
+        </ProtectedRoute>
+        <Footer />
+      </>
+    ),
+  },
   // protected Admin routes
 
-  // {
-  //   path: "/admin/dashboard",
-  //   element: (
-  //     <>
-  //       <AdminNavbar />
-  //       <ProtectedRoute allowedRole="admin">
-  //         <AdminDashboard />
-  //       </ProtectedRoute>
-  //       <Footer />
-  //     </>
-  //   ),
-  // },
   {
     path: "/admin/dashboard",
     element: (
@@ -147,8 +148,8 @@ const router = createBrowserRouter([
 export default function App() {
   return (
     <>
-      <RouterProvider router={router} />;
-      <Toaster />;
+      <RouterProvider router={router} />
+      <Toaster />
     </>
   );
 }

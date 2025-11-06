@@ -101,10 +101,18 @@ export default function Login() {
       // alert(`${role === "admin" ? "Admin" : "User"} login successful!`);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", role);
+      localStorage.setItem("user", JSON.stringify(res.data.user)); // 👈 add this line
+      window.dispatchEvent(new Event("storage"));
+      // toast({
+      //   title: "Login Successfull bro",
+      //   description: `Welcome back!! ${role}`,
+      // });
+
       toast({
-        title: "Login Successfull bro",
-        description: `Welcome back!! ${role}`,
+        title: "Login Successful ✅",
+        description: `Welcome aboard, ${res.data.user.name}!`,
       });
+
       // Redirect based on role
       navigate(role === "admin" ? "/admin/dashboard" : "/");
     } catch (err) {

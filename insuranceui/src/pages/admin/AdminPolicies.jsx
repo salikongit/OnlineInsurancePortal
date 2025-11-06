@@ -308,7 +308,7 @@ export default function AdminPolicies() {
     } catch (err) {
       console.error(err);
       toast({
-        title: "Deletion failed ❌",
+        title: "Deletion failed ",
         description: "Unable to delete this policy. Please try again.",
         variant: "warning",
       });
@@ -317,7 +317,7 @@ export default function AdminPolicies() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100">
         <AdminNavbar />
         <div className="flex items-center justify-center h-[calc(100vh-80px)]">
           <div className="text-center">

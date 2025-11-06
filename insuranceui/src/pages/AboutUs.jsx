@@ -36,7 +36,7 @@ const teamMembers = [
 
 const AboutUs = () => {
   return (
-    <div className="min-h-screen  bg-gray-50 text-gray-800 flex flex-col items-center py-16 px-6 ">
+    <div className="min-h-screen mt-20 bg-gray-50 text-gray-800 flex flex-col items-center py-16 px-6 ">
       <h1 className="text-4xl md:text-5xl mt-10 font-bold mb-4 text-center">
         Meet Our Developers
       </h1>

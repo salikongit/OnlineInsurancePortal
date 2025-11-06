@@ -129,7 +129,7 @@ export default function Register() {
       const res = await axios.post("http://localhost:7000/register", form);
 
       toast({
-        title: "Registration Successful 🎉",
+        title: "Registration Successful ",
         description: `Welcome aboard, ${
           res.data.name || form.name
         }! You can now log in.`,
