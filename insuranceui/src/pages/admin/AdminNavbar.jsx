@@ -40,6 +40,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useToast } from "../../components/hooks/use-toast";
+import finalLogo from "../../assets/finalLogo.png";
 // import { Button } from "../components/lightswind/button";
 import {
   Menu,
@@ -79,13 +80,13 @@ export default function AdminNavbar() {
   };
 
   return (
-    <nav className="bg-linear-to-r from-slate-900 via-slate-800 to-slate-900 text-white shadow-xl border-b border-slate-700">
+    <nav className="bg-linear-to-r from-stone-700 via-stone-900 to-gray-900 text-white shadow-xl border-b border-slate-700">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo */}
           <div className="flex items-center gap-2 sm:gap-3">
-            <div className="p-1.5 sm:p-2 bg-blue-600 rounded-lg">
-              <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            <div className="p-1.5 sm:p-2 rounded-lg">
+              <img src={finalLogo} alt="AssureX logo" className="w-20" />
             </div>
             <h1 className="text-lg sm:text-2xl font-bold bg-linear-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
               AssureX Admin
