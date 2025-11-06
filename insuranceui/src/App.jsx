@@ -15,6 +15,7 @@ import AdminNavbar from "./pages/admin/AdminNavbar";
 import AdminClaims from "./pages/admin/AdminClaims";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminPolicies from "./pages/admin/AdminPolicies";
+import { Toaster } from "./components/lightswind/toaster";
 
 const router = createBrowserRouter([
   {
@@ -144,5 +145,10 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />;
+      <Toaster />;
+    </>
+  );
 }

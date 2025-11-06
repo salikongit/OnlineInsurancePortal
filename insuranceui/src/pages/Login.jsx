@@ -75,13 +75,15 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../components/hooks/use-toast";
+import { Button } from "../components/lightswind/button";
 
 export default function Login() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
   const [role, setRole] = useState("user"); // 👈 Default role = user
   const [error, setError] = useState("");
-
+  const { toast } = useToast(); // ✅ Call the hook
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -96,15 +98,23 @@ export default function Login() {
         role,
       });
 
-      alert(`${role === "admin" ? "Admin" : "User"} login successful!`);
+      // alert(`${role === "admin" ? "Admin" : "User"} login successful!`);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", role);
-
+      toast({
+        title: "Login Successfull bro",
+        description: `Welcome back!! ${role}`,
+      });
       // Redirect based on role
       navigate(role === "admin" ? "/admin/dashboard" : "/");
     } catch (err) {
       console.log(err);
       setError("Invalid credentials. Please try again.");
+      toast({
+        title: "Login failed ❌",
+        description: "Invalid email or password.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -163,12 +173,16 @@ export default function Login() {
           />
 
           {/* 👇 Submit Button */}
-          <button
+          {/* <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-900 transition"
           >
             {role === "admin" ? "Admin Login" : "User Login"}
-          </button>
+          </button> */}
+
+          <Button type="submit">
+            {role === "admin" ? "Admin Login" : "User Login"}
+          </Button>
         </form>
 
         <p className="text-sm text-gray-600 mt-4 text-center">

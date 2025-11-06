@@ -196,6 +196,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import AdminNavbar from "../admin/AdminNavbar";
+import { useToast } from "../../components/hooks/use-toast";
+
 import {
   Plus,
   Trash2,
@@ -210,6 +212,7 @@ export default function AdminPolicies() {
   const [policies, setPolicies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const { toast } = useToast();
   const [newPolicy, setNewPolicy] = useState({
     policy_name: "",
     short_desc: "",
@@ -246,9 +249,15 @@ export default function AdminPolicies() {
   const handleAddPolicy = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:7000/policy/add", newPolicy, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.post(
+        "http://localhost:7000/policy/add",
+        newPolicy,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      // Clear form fields
       setNewPolicy({
         policy_name: "",
         short_desc: "",
@@ -256,26 +265,53 @@ export default function AdminPolicies() {
         premium_amount: "",
         duration_years: "",
       });
+
+      // Refresh policies
       fetchPolicies();
-      alert("Policy added successfully");
+      const addedName =
+        res.data?.policy?.policy_name ||
+        res.data?.policy_name ||
+        newPolicy.policy_name ||
+        "New Policy";
+      // Show toast
+      toast({
+        title: "Policy added successfully !!",
+        description: `${addedName} has been added!`,
+        variant: "success",
+      });
     } catch (err) {
       console.error(err);
-      alert("Failed to add policy");
+      toast({
+        title: "Failed to add policy ",
+        description: "Couldn't add policy. Please try again.",
+        variant: "warning",
+      });
     }
   };
 
   // Delete a policy
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this policy?")) return;
+
     try {
       await axios.delete(`http://localhost:7000/policy/delete/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
       fetchPolicies();
-      alert("Policy deleted successfully");
+
+      toast({
+        title: "Policy deleted !",
+        description: "The policy has been removed successfully.",
+        variant: "success",
+      });
     } catch (err) {
       console.error(err);
-      alert("Failed to delete policy");
+      toast({
+        title: "Deletion failed ❌",
+        description: "Unable to delete this policy. Please try again.",
+        variant: "warning",
+      });
     }
   };
 
