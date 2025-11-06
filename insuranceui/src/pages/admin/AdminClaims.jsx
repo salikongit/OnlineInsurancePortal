@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AdminNavbar from "./AdminNavbar";
+import { toast } from "../../components/hooks/use-toast";
 
 export default function AdminClaims() {
   const [claims, setClaims] = useState([]);
@@ -33,11 +34,19 @@ export default function AdminClaims() {
         { status },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert(`Claim ${status} successfully!`);
+      // alert(`Claim ${status} successfully!`);
+      toast({
+        title: `Claim ${status} successfully!`,
+        variant: "success",
+      });
       fetchClaims(); // refresh table
     } catch (error) {
       console.error("Error updating claim:", error);
       alert("Failed to update claim status");
+      toast({
+        title: "Failed to update claim status",
+        variant: "warning",
+      });
     }
   };
 

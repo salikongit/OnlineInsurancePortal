@@ -39,6 +39,8 @@
 
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useToast } from "../../components/hooks/use-toast";
+// import { Button } from "../components/lightswind/button";
 import {
   Menu,
   X,
@@ -53,10 +55,19 @@ import {
 export default function AdminNavbar() {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const { toast } = useToast();
   const handleLogout = () => {
+    toast({
+      title: "Logout Successfull bro",
+      description: "You are now redirected to Home page",
+    });
+
+    // clearing local storage
     localStorage.clear();
-    navigate("/login");
+
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
   };
 
   const toggleMenu = () => {

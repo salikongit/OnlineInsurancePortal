@@ -60,13 +60,14 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import navbarLogo from "../assets/navbarLogo.png";
+import { useToast } from "../components/hooks/use-toast";
 
 const Navbar = () => {
   const navigate = useNavigate();
 
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
+  const { toast } = useToast();
   // Get login info from localStorage
   const token = localStorage.getItem("token");
   const role = localStorage.getItem("role");
@@ -94,9 +95,17 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
+    toast({
+      title: "Logout Successfull",
+      description: " You are now redirected to the Login page",
+    });
+
     localStorage.removeItem("token");
     localStorage.removeItem("role");
-    navigate("/login");
+
+    setTimeout(() => {
+      navigate("/login");
+    }, 2000);
   };
 
   return (
