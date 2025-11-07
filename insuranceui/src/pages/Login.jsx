@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -8,39 +7,58 @@ import { Button } from "../components/lightswind/button";
 export default function Login() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
-  const [role, setRole] = useState("user"); // 👈 Default role = user
+  const [role, setRole] = useState("user");
   const [error, setError] = useState("");
-  const { toast } = useToast(); // ✅ Call the hook
+  const [validationErrors, setValidationErrors] = useState({}); // New: Field-specific errors
+  const { toast } = useToast();
+
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
+  
+  const validateForm = () => {
+    const errors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!form.email || !emailRegex.test(form.email)) {
+      errors.email = "Please enter a valid email address.";
+    }
+    if (!form.password || form.password.length < 6) {
+      errors.password = "Password must be at least 6 characters.";
+    }
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
+    if (!validateForm()) {
+        toast({
+            title: "Validation Failed ⚠️",
+            description: "Please correct the highlighted fields.",
+            variant: "destructive",
+        });
+        return;
+    }
+
     try {
-      // Send role to backend
       const res = await axios.post("http://localhost:7000/login", {
         ...form,
         role,
       });
 
-      // alert(`${role === "admin" ? "Admin" : "User"} login successful!`);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", role);
-      localStorage.setItem("user", JSON.stringify(res.data.user)); // 👈 add this line
+      localStorage.setItem("user", JSON.stringify(res.data.user));
       window.dispatchEvent(new Event("storage"));
-      // toast({
-      //   title: "Login Successfull bro",
-      //   description: `Welcome back!! ${role}`,
-      // });
 
       toast({
         title: "Login Successful ✅",
         description: `Welcome aboard, ${res.data.user.name}!`,
       });
 
-      // Redirect based on role
       navigate(role === "admin" ? "/admin/dashboard" : "/");
     } catch (err) {
       console.log(err);
@@ -61,7 +79,7 @@ export default function Login() {
         {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
 
         <form onSubmit={handleSubmit}>
-          {/* 👇 Role Selection */}
+
           <div className="flex justify-center mb-6">
             <label className="mr-6 flex items-center gap-2 cursor-pointer">
               <input
@@ -87,35 +105,38 @@ export default function Login() {
             </label>
           </div>
 
-          {/* 👇 Email Input */}
+        
           <input
             type="email"
             name="email"
             placeholder="Email"
             onChange={handleChange}
-            className="w-full border rounded-md px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`w-full border rounded-md px-3 py-2 mb-1 focus:outline-none focus:ring-2 ${
+                validationErrors.email ? "border-red-500 focus:ring-red-500" : "focus:ring-blue-500"
+            }`}
             required
           />
+          {validationErrors.email && (
+            <p className="text-red-500 text-xs mb-4">{validationErrors.email}</p>
+          )}
 
-          {/* 👇 Password Input */}
+          
           <input
             type="password"
             name="password"
             placeholder="Password"
             onChange={handleChange}
-            className="w-full border rounded-md px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`w-full border rounded-md px-3 py-2 mb-1 focus:outline-none focus:ring-2 ${
+                validationErrors.password ? "border-red-500 focus:ring-red-500" : "focus:ring-blue-500"
+            }`}
             required
           />
+          {validationErrors.password && (
+            <p className="text-red-500 text-xs mb-4">{validationErrors.password}</p>
+          )}
 
-          {/* 👇 Submit Button */}
-          {/* <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-900 transition"
-          >
-            {role === "admin" ? "Admin Login" : "User Login"}
-          </button> */}
-
-          <Button type="submit">
+          
+          <Button type="submit" className="mt-4">
             {role === "admin" ? "Admin Login" : "User Login"}
           </Button>
         </form>

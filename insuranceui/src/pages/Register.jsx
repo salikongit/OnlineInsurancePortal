@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -16,13 +17,47 @@ export default function Register() {
   });
 
   const [error, setError] = useState("");
+  const [validationErrors, setValidationErrors] = useState({}); // New: Field-specific errors
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
+  const validateForm = () => {
+    const errors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d{10}$/;
+
+    if (!form.name || form.name.length < 2) {
+        errors.name = "Full name must be at least 2 characters.";
+    }
+    if (!form.email || !emailRegex.test(form.email)) {
+      errors.email = "Please enter a valid email address.";
+    }
+    if (!form.password || form.password.length < 6) {
+      errors.password = "Password must be at least 6 characters.";
+    }
+    
+
+    if (form.phone && !phoneRegex.test(form.phone)) {
+        errors.phone = "Phone number must be exactly 10 digits.";
+    }
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    if (!validateForm()) {
+        toast({
+            title: "Validation Failed ⚠️",
+            description: "Please correct the highlighted fields.",
+            variant: "destructive",
+        });
+        return;
+    }
 
     try {
       const res = await axios.post("http://localhost:7000/register", form);
@@ -40,12 +75,18 @@ export default function Register() {
       setError("Registration failed. Try again with valid details.");
 
       toast({
-        title: "Registration Failed ❌",
+        title: "Registration Failed ",
         description: "Something went wrong. Please check your details.",
         variant: "destructive",
       });
     }
   };
+
+  const getInputClassName = (fieldName) =>
+    `w-full border rounded-md px-3 py-2 mb-1 focus:outline-none focus:ring-2 ${
+      validationErrors[fieldName] ? "border-red-500 focus:ring-red-500" : "focus:ring-blue-500"
+    }`;
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-neutral-200">
@@ -55,40 +96,62 @@ export default function Register() {
         {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
 
         <form onSubmit={handleSubmit}>
+          {/* Name Input */}
           <input
             type="text"
             name="name"
             placeholder="Full Name"
             onChange={handleChange}
-            className="w-full border rounded-md px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={getInputClassName("name")}
             required
           />
+          {validationErrors.name && (
+            <p className="text-red-500 text-xs mb-4">{validationErrors.name}</p>
+          )}
+
+          {/* Email Input */}
           <input
             type="email"
             name="email"
             placeholder="Email"
             onChange={handleChange}
-            className="w-full border rounded-md px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={getInputClassName("email")}
             required
           />
+          {validationErrors.email && (
+            <p className="text-red-500 text-xs mb-4">{validationErrors.email}</p>
+          )}
+          
+          {/* Password Input */}
           <input
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder="Password (min 6 characters)"
             onChange={handleChange}
-            className="w-full border rounded-md px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={getInputClassName("password")}
             required
           />
+          {validationErrors.password && (
+            <p className="text-red-500 text-xs mb-4">{validationErrors.password}</p>
+          )}
+
+          {/* Phone Number Input */}
           <input
-            type="text"
+            type="tel"
             name="phone"
-            placeholder="Phone Number"
+            placeholder="Phone Number (optional, 10 digits)"
             onChange={handleChange}
-            className="w-full border rounded-md px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={getInputClassName("phone")}
+            maxLength="10" // Hint for user input
           />
+          {validationErrors.phone && (
+            <p className="text-red-500 text-xs mb-4">{validationErrors.phone}</p>
+          )}
+
+          {/* Address Input */}
           <textarea
             name="address"
-            placeholder="Address"
+            placeholder="Address (optional)"
             onChange={handleChange}
             className="w-full border rounded-md px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
           ></textarea>

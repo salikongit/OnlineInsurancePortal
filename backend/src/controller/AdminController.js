@@ -2,33 +2,26 @@ import { getConnectionObject } from "../configs/dbconfigs.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-// ✅ Admin Login
+//  Admin Login
 export async function adminLogin(req, res) {
   const { email, password } = req.body;
 
   try {
     const db = getConnectionObject();
     const [rows] = await db.query("SELECT * FROM admins WHERE email = ?", [email]);
-
     if (rows.length === 0) {
       return res.status(404).json({ message: "Admin not found" });
     }
-
     const admin = rows[0];
-
-    // compare hashed password
     const isMatch = await bcrypt.compare(password, admin.password);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid password" });
     }
-
-    // generate JWT token
     const token = jwt.sign(
       { id: admin.admin_id, email: admin.email, role: "admin" },
       "your_jwt_secret_key",
       { expiresIn: "2h" }
     );
-
     res.json({ message: "Admin login successful", token });
   } catch (err) {
     console.error("Admin Login Error:", err);
@@ -36,7 +29,7 @@ export async function adminLogin(req, res) {
   }
 }
 
-// ✅ Get all users
+//  Get all users
 export async function getAllUsers(req, res) {
   try {
     const db = getConnectionObject();
@@ -47,7 +40,7 @@ export async function getAllUsers(req, res) {
   }
 }
 
-// ✅ Get all policies purchased by a user
+//  Get all policies purchased by a user
 export async function getUserPolicies(req, res) {
   const user_id = req.params.user_id;
   try {
@@ -65,7 +58,7 @@ export async function getUserPolicies(req, res) {
   }
 }
 
-// ✅ Get all claims of a user
+// Get all claims of a user
 export async function getUserClaims(req, res) {
   const user_id = req.params.user_id;
   try {
@@ -83,7 +76,7 @@ export async function getUserClaims(req, res) {
   }
 }
 
-// ✅ Dashboard Stats
+//  Dashboard Stats
 export async function getDashboardStats(req, res) {
   try {
     const db = getConnectionObject();
