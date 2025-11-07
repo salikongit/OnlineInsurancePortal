@@ -1,5 +1,5 @@
 import React from "react";
-import { Mail, Phone, MapPin } from "lucide-react"; 
+import { Mail, Phone, MapPin } from "lucide-react";
 
 function ContactUs() {
   return (
@@ -9,24 +9,26 @@ function ContactUs() {
           Get in Touch
         </h1>
 
-        <div 
-          className="bg-indigo-100 border-l-4 border-indigo-500 text-indio-100 p-6 rounded-lg shadow-md mb-12" 
+        <div
+          className="bg-indigo-100 border-l-4 border-indigo-500 text-indio-100 p-6 rounded-lg shadow-md mb-12"
           role="alert"
         >
           <h2 className="text-xl font-bold text-indigo-800 mb-2">
             We are here to help!
           </h2>
           <p className="text-base">
-            Whether you have questions about policy details, need assistance with a claim, or require support with your account, our dedicated team is ready to assist you quickly and professionally.
+            Whether you have questions about policy details, need assistance
+            with a claim, or require support with your account, our dedicated
+            team is ready to assist you quickly and professionally.
           </p>
           {/* Horizontal Rule equivalent */}
           <div className="border-t border-indigo-400 my-4"></div>
           <p className="text-base mb-0">
-            For immediate assistance, please use the form below for a comprehensive response within one business day.
+            For immediate assistance, please use the form below for a
+            comprehensive response within one business day.
           </p>
         </div>
-        {/* 👆 END: Recreated Bootstrap Alert */}
-
+        {/*  END: Recreated Bootstrap Alert */}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {/* Contact Information Section (Keep this static) */}
@@ -92,7 +94,6 @@ function ContactUs() {
                   name="name"
                   placeholder="Your Name"
                   className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        
                 />
               </div>
 

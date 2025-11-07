@@ -14,7 +14,7 @@ export default function Login() {
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
-  
+
   const validateForm = () => {
     const errors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -35,12 +35,12 @@ export default function Login() {
     setError("");
 
     if (!validateForm()) {
-        toast({
-            title: "Validation Failed ⚠️",
-            description: "Please correct the highlighted fields.",
-            variant: "destructive",
-        });
-        return;
+      toast({
+        title: "Validation Failed ⚠️",
+        description: "Please correct the highlighted fields.",
+        variant: "destructive",
+      });
+      return;
     }
 
     try {
@@ -57,6 +57,7 @@ export default function Login() {
       toast({
         title: "Login Successful ✅",
         description: `Welcome aboard, ${res.data.user.name}!`,
+        variant: "success",
       });
 
       navigate(role === "admin" ? "/admin/dashboard" : "/");
@@ -66,7 +67,7 @@ export default function Login() {
       toast({
         title: "Login failed ❌",
         description: "Invalid email or password.",
-        variant: "destructive",
+        variant: "warning",
       });
     }
   };
@@ -79,7 +80,6 @@ export default function Login() {
         {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
 
         <form onSubmit={handleSubmit}>
-
           <div className="flex justify-center mb-6">
             <label className="mr-6 flex items-center gap-2 cursor-pointer">
               <input
@@ -105,37 +105,42 @@ export default function Login() {
             </label>
           </div>
 
-        
           <input
             type="email"
             name="email"
             placeholder="Email"
             onChange={handleChange}
             className={`w-full border rounded-md px-3 py-2 mb-1 focus:outline-none focus:ring-2 ${
-                validationErrors.email ? "border-red-500 focus:ring-red-500" : "focus:ring-blue-500"
+              validationErrors.email
+                ? "border-red-500 focus:ring-red-500"
+                : "focus:ring-blue-500"
             }`}
             required
           />
           {validationErrors.email && (
-            <p className="text-red-500 text-xs mb-4">{validationErrors.email}</p>
+            <p className="text-red-500 text-xs mb-4">
+              {validationErrors.email}
+            </p>
           )}
 
-          
           <input
             type="password"
             name="password"
             placeholder="Password"
             onChange={handleChange}
             className={`w-full border rounded-md px-3 py-2 mb-1 focus:outline-none focus:ring-2 ${
-                validationErrors.password ? "border-red-500 focus:ring-red-500" : "focus:ring-blue-500"
+              validationErrors.password
+                ? "border-red-500 focus:ring-red-500"
+                : "focus:ring-blue-500"
             }`}
             required
           />
           {validationErrors.password && (
-            <p className="text-red-500 text-xs mb-4">{validationErrors.password}</p>
+            <p className="text-red-500 text-xs mb-4">
+              {validationErrors.password}
+            </p>
           )}
 
-          
           <Button type="submit" className="mt-4">
             {role === "admin" ? "Admin Login" : "User Login"}
           </Button>

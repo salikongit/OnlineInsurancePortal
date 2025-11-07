@@ -40,8 +40,8 @@ const Navbar = () => {
     });
     localStorage.removeItem("token");
     localStorage.removeItem("role");
-    localStorage.removeItem("user"); 
-    window.dispatchEvent(new Event("storage")); 
+    localStorage.removeItem("user");
+    window.dispatchEvent(new Event("storage"));
 
     setTimeout(() => {
       navigate("/login");
@@ -56,7 +56,6 @@ const Navbar = () => {
           : "bg-indigo-500 text-white py-4 md:py-6"
       }`}
     >
-
       <Link to="/" className="flex items-center gap-3">
         <img src={finalLogo} alt="AssureX logo" className="w-20" />
         <div className="flex flex-col">

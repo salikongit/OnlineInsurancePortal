@@ -21,7 +21,7 @@ export default function Claim() {
         );
         setPolicies(res.data || []);
       } catch (err) {
-        console.error("❌ Error fetching policies:", err);
+        console.error(" Error fetching policies:", err);
       }
     };
     fetchPolicies();
