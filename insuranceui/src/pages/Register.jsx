@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +16,7 @@ export default function Register() {
   });
 
   const [error, setError] = useState("");
-  const [validationErrors, setValidationErrors] = useState({}); // New: Field-specific errors
+  const [validationErrors, setValidationErrors] = useState({});
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -28,7 +27,7 @@ export default function Register() {
     const phoneRegex = /^\d{10}$/;
 
     if (!form.name || form.name.length < 2) {
-        errors.name = "Full name must be at least 2 characters.";
+      errors.name = "Full name must be at least 2 characters.";
     }
     if (!form.email || !emailRegex.test(form.email)) {
       errors.email = "Please enter a valid email address.";
@@ -36,10 +35,9 @@ export default function Register() {
     if (!form.password || form.password.length < 6) {
       errors.password = "Password must be at least 6 characters.";
     }
-    
 
     if (form.phone && !phoneRegex.test(form.phone)) {
-        errors.phone = "Phone number must be exactly 10 digits.";
+      errors.phone = "Phone number must be exactly 10 digits.";
     }
 
     setValidationErrors(errors);
@@ -51,12 +49,12 @@ export default function Register() {
     setError("");
 
     if (!validateForm()) {
-        toast({
-            title: "Validation Failed ⚠️",
-            description: "Please correct the highlighted fields.",
-            variant: "destructive",
-        });
-        return;
+      toast({
+        title: "Validation Failed ⚠️",
+        description: "Please correct the highlighted fields.",
+        variant: "destructive",
+      });
+      return;
     }
 
     try {
@@ -84,9 +82,10 @@ export default function Register() {
 
   const getInputClassName = (fieldName) =>
     `w-full border rounded-md px-3 py-2 mb-1 focus:outline-none focus:ring-2 ${
-      validationErrors[fieldName] ? "border-red-500 focus:ring-red-500" : "focus:ring-blue-500"
+      validationErrors[fieldName]
+        ? "border-red-500 focus:ring-red-500"
+        : "focus:ring-blue-500"
     }`;
-
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-neutral-200">
@@ -119,9 +118,11 @@ export default function Register() {
             required
           />
           {validationErrors.email && (
-            <p className="text-red-500 text-xs mb-4">{validationErrors.email}</p>
+            <p className="text-red-500 text-xs mb-4">
+              {validationErrors.email}
+            </p>
           )}
-          
+
           {/* Password Input */}
           <input
             type="password"
@@ -132,7 +133,9 @@ export default function Register() {
             required
           />
           {validationErrors.password && (
-            <p className="text-red-500 text-xs mb-4">{validationErrors.password}</p>
+            <p className="text-red-500 text-xs mb-4">
+              {validationErrors.password}
+            </p>
           )}
 
           {/* Phone Number Input */}
@@ -145,7 +148,9 @@ export default function Register() {
             maxLength="10" // Hint for user input
           />
           {validationErrors.phone && (
-            <p className="text-red-500 text-xs mb-4">{validationErrors.phone}</p>
+            <p className="text-red-500 text-xs mb-4">
+              {validationErrors.phone}
+            </p>
           )}
 
           {/* Address Input */}
