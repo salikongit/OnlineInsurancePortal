@@ -1,4 +1,3 @@
-// src/services/MyAccountService.js
 import axios from "axios";
 
 

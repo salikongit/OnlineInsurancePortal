@@ -37,18 +37,3 @@ export async function getUserProfile(req, res) {
   }
 }
 
-// Update user profile
-export async function updateUserProfile(req, res) {
-  const user_id = req.params.user_id;
-  const { name, email, phone, address } = req.body;
-  try {
-    const db = getConnectionObject();
-    await db.query(
-      "UPDATE users SET name=?, email=?, phone=?, address=? WHERE user_id=?",
-      [name, email, phone, address, user_id]
-    );
-    res.json({ message: "Profile updated successfully" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-}

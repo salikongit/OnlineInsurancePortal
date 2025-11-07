@@ -1,4 +1,3 @@
-// PolicyRoutes.js
 import express from "express";
 import {
     buyPolicy,

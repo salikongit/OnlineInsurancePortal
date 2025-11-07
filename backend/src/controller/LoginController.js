@@ -23,7 +23,6 @@ export async function login(req, res) {
         if (!isMatch) {
             return res.status(400).json({ message: "Invalid password" });
         }
-
         const token = jwt.sign(
             {
                 id: role === ROLES.ADMIN ? user.admin_id : user.user_id,
@@ -32,14 +31,12 @@ export async function login(req, res) {
             "user1234",
             { expiresIn: "2h" }
         );
-
         const userData = {
             id: role === ROLES.ADMIN ? user.admin_id : user.user_id,
             name: user.name,
             email: user.email,
             role,
         };
-
         res.status(200).json({
             message: "Login successful",
             token,

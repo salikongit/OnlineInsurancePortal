@@ -80,20 +80,13 @@ export async function getUserClaims(req, res) {
 export async function getDashboardStats(req, res) {
   try {
     const db = getConnectionObject();
-
-    // Get total users
     const [[{ total_users }]] = await db.query("SELECT COUNT(*) AS total_users FROM users");
-
-    // Get active policies
     const [[{ active_policies }]] = await db.query(
       "SELECT COUNT(*) AS active_policies FROM user_policies WHERE status='active'"
     );
-
-    // Get pending claims
     const [[{ pending_claims }]] = await db.query(
       "SELECT COUNT(*) AS pending_claims FROM claims WHERE claim_status='pending'"
     );
-
     res.json({
       total_users,
       active_policies,

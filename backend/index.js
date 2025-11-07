@@ -6,11 +6,9 @@ import { login } from "./src/controller/LoginController.js";
 import { adminLogin, getAllUsers, getUserPolicies } from "./src/controller/AdminController.js";
 import { verifyToken } from "./src/Middleware/VerifyToken.js";
 import { addPolicy, getPolicies } from "./src/controller/PolicyController.js";
-import UserRoutes from "../backend/src/Routes/UserRoutes.js"
 import ClaimRoutes from "../backend/src/Routes/ClaimRoutes.js";
 import PolicyRoutes from "../backend/src/Routes/PolicyRoutes.js"
 import AdminRoutes from "../backend/src/Routes/AdminRoutes.js"
-import LoginRoutes from "../backend/src/Routes/UserRoutes.js"
 import purchaseRoutes from "./src/Routes/PurchaseRoutes.js";
 
 
@@ -31,19 +29,20 @@ app.use("/policy", PolicyRoutes);
 app.use("/claims", ClaimRoutes);
 app.use("/purchase", purchaseRoutes);
 console.log(" Purchase routes active at /purchase");
-//  Routes
-app.post("/register", registerUser);             // works
-app.post("/login", login);                       // works
-app.post("/admin/addpolicy", addPolicy);         // works
+
+
+app.post("/register", registerUser);             // chal rha
+app.post("/login", login);                       // chal rha
+app.post("/admin/addpolicy", addPolicy);         // chal rha
 app.post("/admin/login", adminLogin);
-app.get("/admin/getusers", verifyToken, getAllUsers);  // works
-app.get("/admin/userpolicies", getUserPolicies);       // works
+app.get("/admin/getusers", verifyToken, getAllUsers);  // chal rha
+app.get("/admin/userpolicies", getUserPolicies);       // chal rha
 
 
-// // ✅ Start Server
+// //  Start Server
 // app.listen(7000, () => {
 //     connectDb();
-//     console.log("✅ Server running on port 7000");
+//     console.log(" Server running on port 7000");
 // });
 
 

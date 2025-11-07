@@ -1,6 +1,3 @@
-
-
-
 import express from "express";
 import { purchasePolicy, getUserPurchases, getAllPurchases } from "../controller/PurchaseController.js";
 

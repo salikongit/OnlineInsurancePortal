@@ -1,6 +1,5 @@
 import { createConnection } from "mysql2/promise";
 
-
 let connection = null;
 export async function connectDb() {
     try {

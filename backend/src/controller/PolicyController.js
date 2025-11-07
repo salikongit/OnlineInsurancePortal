@@ -38,7 +38,6 @@ export async function buyPolicy(req, res) {
   }
 }
 
-
 // Get policy by ID
 export async function getPolicyById(req, res) {
   try {

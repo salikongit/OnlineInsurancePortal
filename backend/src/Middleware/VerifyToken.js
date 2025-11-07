@@ -1,4 +1,3 @@
-
 import jwt from "jsonwebtoken";
 
 export function verifyToken(request,response,next){
